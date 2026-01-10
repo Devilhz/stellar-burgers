@@ -1,25 +1,36 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/store';
+import { fetchOrderByNumber } from '../../services/slices/orderSlice';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const { number } = useParams();
+  const orderData = useSelector((state) => state.order.order);
+  const ingredients: TIngredient[] = useSelector(
+    (state) => state.ingredients.ingredients
+  );
 
-  const ingredients: TIngredient[] = [];
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const orderNumber = Number(number);
+    if (!isNaN(orderNumber)) {
+      dispatch(fetchOrderByNumber(orderNumber));
+    }
+  }, [dispatch, number]);
+
+  const { loading: orderLoading, error: orderError } = useSelector(
+    (state) => state.order
+  );
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
-    if (!orderData || !ingredients.length) return null;
+    if (!orderData || !ingredients.length || orderLoading) {
+      return null;
+    }
 
     const date = new Date(orderData.createdAt);
 
@@ -57,7 +68,7 @@ export const OrderInfo: FC = () => {
       date,
       total
     };
-  }, [orderData, ingredients]);
+  }, [orderData, ingredients, orderLoading]);
 
   if (!orderInfo) {
     return <Preloader />;
