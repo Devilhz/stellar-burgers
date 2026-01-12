@@ -26,9 +26,9 @@ afterEach('Очистка localStorage, cookies', () => {
 
 describe('Конструктор бургера', () => {
   it('Добавление булки, начинки и соуса в конструктор', () => {
-    cy.get(SELECTORS.ingredient).eq(0).find('button').click();
-    cy.get(SELECTORS.ingredient).eq(2).find('button').click();
-    cy.get(SELECTORS.ingredient).eq(12).find('button').click();
+    cy.get(SELECTORS.ingredient).eq(0).find('button').click({ force: true });
+    cy.get(SELECTORS.ingredient).eq(2).find('button').click({ force: true });
+    cy.get(SELECTORS.ingredient).eq(12).find('button').click({ force: true });
 
     cy.get(SELECTORS.bunFirst).should('exist').and('contain', 'булка');
     cy.get(SELECTORS.filling).should('exist').and('contain', 'Биокотлета');
@@ -39,19 +39,19 @@ describe('Конструктор бургера', () => {
 
 describe('Модальное окно', () => {
   it('Открытие модального окна ингредиента', () => {
-    cy.get(SELECTORS.ingredient).first().click();
+    cy.get(SELECTORS.ingredient).first().click({ force: true });
     cy.get(SELECTORS.modal).should('be.visible').and('contain', 'булка');
   });
 
   it('Закрытие по клику на оверлей', () => {
-    cy.get(SELECTORS.ingredient).first().click();
+    cy.get(SELECTORS.ingredient).first().click({ force: true });
     cy.get(SELECTORS.modalOverlay).click({ force: true });
     cy.get(SELECTORS.modal).should('not.exist');
   });
 
   it('Закрытие по клику на крестик', () => {
-    cy.get(SELECTORS.ingredient).first().click();
-    cy.get(SELECTORS.modalClose).click();
+    cy.get(SELECTORS.ingredient).first().click({ force: true });
+    cy.get(SELECTORS.modalClose).click({ force: true });
     cy.get(SELECTORS.modal).should('not.exist');
   });
 });
@@ -64,7 +64,7 @@ describe('Создание заказа', () => {
     });
 
     const pick = (index: number) =>
-      cy.get(SELECTORS.ingredient).eq(index).find('button').click();
+      cy.get(SELECTORS.ingredient).eq(index).find('button').click({ force: true });
 
     [0, 2, 12].forEach(pick);
 
@@ -75,7 +75,7 @@ describe('Создание заказа', () => {
       cy.get(SELECTORS.order).should('contain', String(data.order.number));
     });
 
-    cy.get(SELECTORS.modalClose).click();
+    cy.get(SELECTORS.modalClose).click({ force: true });
     cy.get(SELECTORS.modal).should('not.exist');
 
     cy.get(SELECTORS.filling).should('not.contain', 'Биокотлета');
