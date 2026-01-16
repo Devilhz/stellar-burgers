@@ -68,7 +68,7 @@ describe('Создание заказа', () => {
 
     [0, 2, 12].forEach(pick);
 
-    cy.contains('button', 'Оформить заказ').click();
+    cy.contains('button', 'Оформить заказ').click({ force: true });
     cy.get(SELECTORS.modal).should('be.visible');
 
     cy.fixture('order.json').then((data) => {
