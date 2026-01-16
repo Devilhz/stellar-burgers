@@ -11,7 +11,9 @@ describe('авторизация и профиль пользователя', ()
   const mockUser = { email: 'test@test.ru', name: 'Test' };
 
   it('должен возвращать initialState при неизвестном action', () => {
-    expect(reducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(initialState);
+    expect(reducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(
+      initialState
+    );
   });
 
   describe('вход пользователя', () => {

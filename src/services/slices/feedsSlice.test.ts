@@ -1,4 +1,8 @@
-import reducer, { fetchFeed, fetchUserOrders, initialState } from './feedsSlice';
+import reducer, {
+  fetchFeed,
+  fetchUserOrders,
+  initialState
+} from './feedsSlice';
 import { getFeedsApi } from '@api';
 import type { FeedsState } from './feedsSlice';
 import type { TOrder } from '@utils-types';
@@ -66,7 +70,11 @@ describe('feedsSlice', () => {
     it('rejected: выключает loading и сохраняет текст ошибки', () => {
       const state = reducer(
         { ...initialState, loading: true },
-        fetchUserOrders.rejected(new Error('User orders failed'), 'req1', undefined)
+        fetchUserOrders.rejected(
+          new Error('User orders failed'),
+          'req1',
+          undefined
+        )
       );
 
       expect(state.loading).toBe(false);

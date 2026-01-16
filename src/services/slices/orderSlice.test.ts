@@ -15,7 +15,9 @@ describe('работа с текущим заказом', () => {
   };
 
   it('должен возвращать initialState при неизвестном action', () => {
-    expect(orderReducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(initialState);
+    expect(orderReducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(
+      initialState
+    );
   });
 
   it('clearCurrentOrder: очищает заказ и сбрасывает loading и error', () => {

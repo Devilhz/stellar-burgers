@@ -1,7 +1,6 @@
 import reducer, { fetchIngredients, initialState } from './ingredientsSlice';
 
 describe('загрузка ингредиентов', () => {
-
   // Мок данных ингредиентов
   const mockIngredients = [
     {
@@ -33,7 +32,9 @@ describe('загрузка ингредиентов', () => {
   ];
 
   it('должен возвращать initialState при неизвестном action', () => {
-    expect(reducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(initialState);
+    expect(reducer(undefined, { type: 'UNKNOWN_ACTION' })).toEqual(
+      initialState
+    );
   });
 
   it('pending: включает loading и очищает error', () => {
@@ -86,23 +87,20 @@ describe('загрузка ингредиентов', () => {
     expect(nextState.error).toBe('Network error');
   });
 
-  it(
-    "rejected без error.message: записывает дефолтную ошибку 'Loading ingredients error'",
-    () => {
-      const prevState = {
-        ...initialState,
-        loading: true
-      };
-      
-      const rejectedWithoutMessage = {
-        type: fetchIngredients.rejected.type,
-        error: { message: undefined }
-      };
+  it("rejected без error.message: записывает дефолтную ошибку 'Loading ingredients error'", () => {
+    const prevState = {
+      ...initialState,
+      loading: true
+    };
 
-      const nextState = reducer(prevState, rejectedWithoutMessage);
+    const rejectedWithoutMessage = {
+      type: fetchIngredients.rejected.type,
+      error: { message: undefined }
+    };
 
-      expect(nextState.loading).toBe(false);
-      expect(nextState.error).toBe('Loading ingredients error');
-    }
-  );
+    const nextState = reducer(prevState, rejectedWithoutMessage);
+
+    expect(nextState.loading).toBe(false);
+    expect(nextState.error).toBe('Loading ingredients error');
+  });
 });

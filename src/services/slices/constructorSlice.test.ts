@@ -81,8 +81,6 @@ describe('управление ингредиентами бургера', () =>
     state = reducer(state, removeIngredient(firstId));
 
     expect(state.ingredients).toHaveLength(1);
-    expect(
-      state.ingredients.find((i) => i.id === firstId)
-    ).toBeUndefined();
+    expect(state.ingredients.find((i) => i.id === firstId)).toBeUndefined();
   });
 });
