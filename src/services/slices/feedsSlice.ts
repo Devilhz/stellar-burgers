@@ -13,7 +13,7 @@ export interface FeedsState {
   error: string | null;
 }
 
-const initialState: FeedsState = {
+export const initialState: FeedsState = {
   userOrders: [],
   feedOrders: [],
   feed: {
@@ -59,6 +59,7 @@ const ordersSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchFeed.fulfilled, (state, action) => {
+        state.loading = false;
         console.log('[Feed] Успешный ответ');
         state.feedOrders = action.payload.orders;
         state.feed = {
